@@ -282,6 +282,7 @@ def create_load():
         cargo_description = body.get("cargo_description")
         origin_city = body.get("origin_city")
         destination_city = body.get("destination_city")
+        deliver_by_date = body.get("deliver_by_date")
         if not company_name:
             return jsonify({
                 "error": "company_name is required"
@@ -293,6 +294,10 @@ def create_load():
         if not destination_city:
             return jsonify({
                 "error": "destination_city is required"
+            }), 400
+        if not deliver_by_date:
+            return jsonify({
+                "error": "deliver_by_date is required"
             }), 400
         origin_lat = body.get("lat_coords")
         origin_lng = body.get("lng_coords")
@@ -316,6 +321,7 @@ def create_load():
             "lng_coords": origin_lng,
             "dest_lat": destination_lat,
             "dest_lng": destination_lng,
+            "deliver_by_date": deliver_by_date,
             "status": "open",
         }
         response = (supabase.table("loads").insert(load).execute())
