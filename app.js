@@ -420,7 +420,8 @@ document.getElementById("dispatch-form").addEventListener("submit", async e => {
                 lat_coords: originLat,
                 lng_coords: originLng,
                 dest_lat: destinationLat,
-                dest_lng: destinationLng
+                dest_lng: destinationLng,
+                deliver_by_date: document.getElementById("deliver-by-date").value
             })
         });
         document.getElementById("dispatch-modal").classList.add("hidden");
@@ -548,7 +549,8 @@ function createOpenLoadMarker(load) {
         selectedLoad = load;
         document.getElementById("sheet-payout").innerText =`$${Number(load.payout).toLocaleString()}`;
         document.getElementById("sheet-company").innerText = load.company_name;
-        document.getElementById("sheet-cargo").innerText = load.cargo_description;
+        const due = load.deliver_by_date ? ` • Deliver by: ${load.deliver_by_date}` : "";
+        document.getElementById("sheet-cargo").innerText = `${load.cargo_description}${due}`;
         document.getElementById("sheet-origin").innerText = load.origin_city;
         document.getElementById("sheet-dest").innerText = load.destination_city;
         document.getElementById("sheet-action-area").innerHTML = `
@@ -599,7 +601,8 @@ function openDriverSheet(load) {
     selectedLoad = load;
     document.getElementById("sheet-payout").innerText = `$${Number(load.payout).toLocaleString()}`;
     document.getElementById("sheet-company").innerText = load.company_name;
-    document.getElementById("sheet-cargo").innerText = `Active Load: ${load.cargo_description}`;
+    const due = load.deliver_by_date ? ` • Deliver by: ${load.deliver_by_date}` : "";
+    document.getElementById("sheet-cargo").innerText = `Active Load: ${load.cargo_description}${due}`;    
     document.getElementById("sheet-origin").innerText = load.origin_city;
     document.getElementById("sheet-dest").innerText = load.destination_city;
     const actionArea = document.getElementById("sheet-action-area");
